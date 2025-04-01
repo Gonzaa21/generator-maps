@@ -1,5 +1,6 @@
 import src.generator as generator
 import src.visualizer as visualizer
+import src.hash as hash
 import json
 import numpy as np
 
@@ -9,15 +10,17 @@ with open("config.json", "r") as file:
 
 def Main():
     print("Generating map...")
-    map = generator.generate_map(config["size"], config["scale"], config["octaves"], config["seed"])
-    
-    print("Saving map in npy file...")
-    np.save("maps/npy/map.npy", map)
+    map = generator.generate_map(config["size"], config["scale"], config["octaves"])
+    map_filename = generator.gen_save_map(map)
 
     print("Showing and saving image...")
     visualizer.visualizer_map(map)
     visualizer.save_map(map, config["output"])
-
+    
+    hash_filename = hash.save_hash(map_filename)
+    print(f"Map saved in: {map_filename}")
+    print(f"Hash saved in: {hash_filename}")
+    
     print("Process completed. Map saved in:", config["output"])
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -15,6 +16,10 @@ def visualizer_map(map):
     plt.show() # show map
     
 def save_map(map, filename, colormap="terrain"):
+    # save maps in different file
+    timestamp = time.strftime("%Y%m%d_%H%M%S")  # Generate unique label based on date
+    filename = f"maps/png/map_{timestamp}.png"
+    
     # save map in rgb scale
     cmap = plt.get_cmap(colormap)
     color = cmap(map)[:, :, :3]
@@ -24,6 +29,5 @@ def save_map(map, filename, colormap="terrain"):
     img.save(filename)
     
 if __name__ == "__main__":
-    map = np.load("maps/npy/map.npy")  # load map
     visualizer_map(map)
     save_map(map, config["output"]) # save map
